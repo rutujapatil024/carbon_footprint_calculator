@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Individual Carbon Footprint</title>
+
+    <!-- Bootstrap CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5 mb-5">
+
+<form action="/calculate" method="POST">
+
+    <!-- ================= HOUSEHOLD SECTION ================= -->
+    <div class="card p-4 mb-5">
+
+        <h5 class="mb-4 text-primary">Household</h5>
+
+        <div class="row mb-3">
+            <div class="col-md-5">I live in a(n):</div>
+            <div class="col-md-7">
+                <select class="form-select" name="house_type" required>
+                    <option value="">Select</option>
+                    <option value="Apartment">Apartment building</option>
+                    <option value="Detached">Detached single family house</option>
+                    <option value="Attached">Attached single family house</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-5">Size of housing</div>
+            <div class="col-md-7">
+                <select class="form-select" name="house_size" required>
+                    <option value="">Select</option>
+                    <option value="1">Small</option>
+                    <option value="2">Medium</option>
+                    <option value="3">Large</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-5">Renewable electricity usage</div>
+            <div class="col-md-7">
+                <select class="form-select" name="electricity" required>
+                    <option value="">Select</option>
+                    <option value="1.5">0–25%</option>
+                    <option value="1.0">25–50%</option>
+                    <option value="0.5">50%+</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-5">My diet is mostly:</div>
+            <div class="col-md-7">
+                <select class="form-select" name="diet" required>
+                    <option value="">Select</option>
+                    <option value="Vegetarian">Vegetarian</option>
+                    <option value="Omnivore">Average omnivore</option>
+                    <option value="HeavyMeat">Heavy meat eater</option>
+                    <option value="Vegan">Vegan</option>
+                    <option value="NoBeef">No Beef</option>
+                </select>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ================= TRANSPORTATION SECTION ================= -->
+    <div class="card p-4">
+
+        <h5 class="mb-4 text-primary">Transportation (km per week)</h5>
+
+        <div class="row mb-3">
+            <div class="col-md-5">Above-ground rail</div>
+            <div class="col-md-7">
+                <input type="number"
+                       class="form-control"
+                       name="rail_above"
+                       min="0"
+                       value="0"
+                       required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-5">Below-ground rail</div>
+            <div class="col-md-7">
+                <input type="number"
+                       class="form-control"
+                       name="rail_below"
+                       min="0"
+                       value="0"
+                       required>
+            </div>
+        </div>
+
+        <div class="row mb-3">
+            <div class="col-md-5">Bus</div>
+            <div class="col-md-7">
+                <input type="number"
+                       class="form-control"
+                       name="bus"
+                       min="0"
+                       value="0"
+                       required>
+            </div>
+        </div>
+
+        <!-- Vehicle Checkbox -->
+        <div class="row mb-3">
+            <div class="col-md-5">Do you use a vehicle?</div>
+            <div class="col-md-7">
+                <input type="checkbox"
+                       name="use_vehicle"
+                       id="useVehicle"
+                       onclick="toggleVehicle()"> Yes
+            </div>
+        </div>
+
+        <!-- ================= VEHICLE SECTION ================= -->
+        <div id="vehicleSection" class="d-none">
+
+            <div id="vehiclesContainer">
+
+                <div class="vehicle-block border rounded p-3 mb-3">
+
+                    <div class="row mb-2">
+                        <div class="col-md-5">Annual distance (km)</div>
+                        <div class="col-md-7">
+                            <input type="number"
+                                   class="form-control"
+                                   name="distance[]"
+                                   min="0"
+                                   value="0">
+                        </div>
+                    </div>
+
+                    <div class="row mb-2">
+                        <div class="col-md-5">Fuel economy (km/L)</div>
+                        <div class="col-md-7">
+                            <input type="number"
+                                   class="form-control"
+                                   name="fuel[]"
+                                   min="1"
+                                   value="1">
+                        </div>
+                    </div>
+
+                    <button type="button"
+                            class="btn btn-sm btn-danger"
+                            onclick="removeVehicle(this)">
+                        Remove vehicle
+                    </button>
+
+                </div>
+            </div>
+
+            <div class="text-success fw-semibold mt-2"
+                 style="cursor:pointer;"
+                 onclick="addVehicle()">
+                + Add another vehicle
+            </div>
+
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-primary px-5">
+                CALCULATE FOOTPRINT
+            </button>
+        </div>
+
+    </div>
+
+</form>
+</div>
+
+<!-- ================= JAVASCRIPT ================= -->
+<script>
+function toggleVehicle() {
+    document.getElementById("vehicleSection").classList.toggle("d-none");
+}
+
+function addVehicle() {
+    const container = document.getElementById("vehiclesContainer");
+
+    const vehicleHTML = `
+        <div class="vehicle-block border rounded p-3 mb-3">
+            <div class="row mb-2">
+                <div class="col-md-5">Annual distance (km)</div>
+                <div class="col-md-7">
+                    <input type="number" class="form-control" name="distance[]" min="0" value="0">
+                </div>
+            </div>
+
+            <div class="row mb-2">
+                <div class="col-md-5">Fuel economy (km/L)</div>
+                <div class="col-md-7">
+                    <input type="number" class="form-control" name="fuel[]" min="1" value="1">
+                </div>
+            </div>
+
+            <button type="button"
+                    class="btn btn-sm btn-danger"
+                    onclick="removeVehicle(this)">
+                Remove vehicle
+            </button>
+        </div>
+    `;
+
+    container.insertAdjacentHTML("beforeend", vehicleHTML);
+}
+
+function removeVehicle(btn) {
+    btn.closest(".vehicle-block").remove();
+}
+</script>
+
+</body>
+</html>

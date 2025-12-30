@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin - Emission Factors</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+<div class="container mt-5 mb-5">
+
+    <h2 class="fw-bold text-center mb-4">
+        Admin Panel: Update Emission Factors
+    </h2>
+
+    <form action="/update_factors" method="POST">
+
+        <!-- HOUSEHOLD FACTORS -->
+        <div class="card p-4 mb-4">
+            <h5 class="mb-3 text-primary">Household Factors</h5>
+
+            <div class="row mb-3">
+                <div class="col-md-6">Apartment building factor</div>
+                <div class="col-md-6">
+                    <input type="number" step="0.01" class="form-control"
+                           name="apartment_factor"
+                           value="{{ apartment }}" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">Detached house factor</div>
+                <div class="col-md-6">
+                    <input type="number" step="0.01" class="form-control"
+                           name="detached_factor"
+                           value="{{ detached }}" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">Attached house factor</div>
+                <div class="col-md-6">
+                    <input type="number" step="0.01" class="form-control"
+                           name="attached_factor"
+                           value="{{ attached }}" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">Diet factor (average omnivore)</div>
+                <div class="col-md-6">
+                    <input type="number" step="0.01" class="form-control"
+                           name="diet_factor"
+                           value="{{ diet }}" required>
+                </div>
+            </div>
+        </div>
+
+        <!-- TRANSPORT FACTORS -->
+        <div class="card p-4 mb-4">
+            <h5 class="mb-3 text-primary">Transport Factors</h5>
+
+            <div class="row mb-3">
+                <div class="col-md-6">Rail factor (t CO₂ / km)</div>
+                <div class="col-md-6">
+                    <input type="number" step="0.00001" class="form-control"
+                           name="rail_factor"
+                           value="{{ rail }}" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">Bus factor (t CO₂ / km)</div>
+                <div class="col-md-6">
+                    <input type="number" step="0.00001" class="form-control"
+                           name="bus_factor"
+                           value="{{ bus }}" required>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">Vehicle fuel factor</div>
+                <div class="col-md-6">
+                    <input type="number" step="0.01" class="form-control"
+                           name="vehicle_factor"
+                           value="{{ vehicle }}" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4">
+            <button type="submit" class="btn btn-success px-5">
+                Update Factors
+            </button>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>
