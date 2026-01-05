@@ -13,7 +13,9 @@
     <!-- HEADER -->
     <div class="text-center mb-5">
         <h2 class="fw-bold">YOUR CARBON IMPACT</h2>
-        <p class="text-muted">Annual carbon footprint calculated from your inputs</p>
+        <p class="text-muted">
+            Annual carbon footprint based on your inputs
+        </p>
     </div>
 
     <!-- ================= OVERALL RESULT ================= -->
@@ -35,9 +37,17 @@
         </div>
 
         <h5 class="mt-3">
-            🌿 Your Footprint:
-            <strong>{{ total }} metric tons CO₂ / year</strong>
+            🌿 Your Annual Footprint:
+            <strong>{{ total }} metric tons CO₂</strong>
         </h5>
+
+        <p class="text-muted mb-0">
+            {% if household_total and household_total < total %}
+                (Per person, based on household size)
+            {% else %}
+                (Individual footprint)
+            {% endif %}
+        </p>
     </div>
 
     <!-- ================= BREAKDOWN ================= -->
@@ -46,7 +56,8 @@
 
         <ul class="list-group list-group-flush">
             <li class="list-group-item">
-                🏠 Household Emissions:
+                🏠 Home & Lifestyle Emissions
+                <small class="text-muted">(per person if household)</small>:
                 <strong>{{ household_total }} t CO₂</strong>
             </li>
             <li class="list-group-item">
@@ -91,8 +102,14 @@
     <!-- ================= COMPARISON ================= -->
     <div class="card p-4 mb-4">
         <h5 class="fw-semibold mb-3">How do you compare?</h5>
-        <p>🌍 Average carbon footprint in Asia: <strong>2.78 t CO₂</strong></p>
-        <p>👤 Your footprint: <strong>{{ total }} t CO₂</strong></p>
+        <p>
+            🌍 Average per-capita carbon footprint in Asia:
+            <strong>2.78 t CO₂ / year</strong>
+        </p>
+        <p>
+            👤 Your footprint:
+            <strong>{{ total }} t CO₂ / year</strong>
+        </p>
     </div>
 
     <!-- ================= TIPS ================= -->
@@ -106,22 +123,31 @@
                 </p>
 
             {% elif impact_level == 'Moderate' %}
-<ul>
-    <li>Increase use of public transport</li>
-    <li>Improve home energy efficiency</li>
+                <ul>
+                    <li>Improve home energy efficiency</li>
+                    <li>Adopt a lower-carbon diet</li>
 
-    {% if vehicle_total > 0 %}
-    <li>Reduce fuel consumption</li>
-    {% endif %}
-</ul>
+                    {% if transport_total > 0 %}
+                        <li>Optimize your use of public transport</li>
+                    {% endif %}
 
+                    {% if vehicle_total > 0 %}
+                        <li>Reduce fuel consumption and driving frequency</li>
+                    {% endif %}
+                </ul>
 
             {% else %}
                 <ul class="text-danger">
-                    <li>Reduce private vehicle usage</li>
-                    <li>Switch to renewable electricity</li>
+                    <li>Switch to renewable electricity where possible</li>
                     <li>Adopt a low-carbon diet</li>
-                    <li>Improve vehicle fuel efficiency</li>
+
+                    {% if transport_total > 0 %}
+                        <li>Reduce travel distances and frequency</li>
+                    {% endif %}
+
+                    {% if vehicle_total > 0 %}
+                        <li>Reduce private vehicle usage or improve fuel efficiency</li>
+                    {% endif %}
                 </ul>
             {% endif %}
         </div>
@@ -129,8 +155,6 @@
 
     <!-- ACTION BUTTONS -->
     <div class="text-center mt-4">
-
-
         <a href="/" class="btn btn-outline-secondary px-4">Home</a>
     </div>
 

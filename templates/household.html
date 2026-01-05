@@ -43,14 +43,15 @@
             </div>
         </div>
 
+        <!-- Electricity (monthly kWh approximation) -->
         <div class="row mb-3">
             <div class="col-md-5">Renewable electricity usage</div>
             <div class="col-md-7">
                 <select class="form-select" name="electricity" required>
                     <option value="">Select</option>
-                    <option value="1.5">0–25%</option>
-                    <option value="1.0">25–50%</option>
-                    <option value="0.5">50%+</option>
+                    <option value="150">0–25%</option>
+                    <option value="100">25–50%</option>
+                    <option value="50">50%+</option>
                 </select>
             </div>
         </div>
@@ -62,6 +63,7 @@
                        class="form-control"
                        name="residents"
                        min="1"
+                       max="10"
                        value="1"
                        required>
             </div>
@@ -95,6 +97,7 @@
                        class="form-control"
                        name="rail_above"
                        min="0"
+                       max="1000"
                        value="0"
                        required>
             </div>
@@ -107,6 +110,7 @@
                        class="form-control"
                        name="rail_below"
                        min="0"
+                       max="1000"
                        value="0"
                        required>
             </div>
@@ -119,6 +123,7 @@
                        class="form-control"
                        name="bus"
                        min="0"
+                       max="1000"
                        value="0"
                        required>
             </div>
@@ -149,6 +154,7 @@
                                    class="form-control"
                                    name="distance[]"
                                    min="0"
+                                   max="100000"
                                    value="0">
                         </div>
                     </div>
@@ -159,8 +165,9 @@
                             <input type="number"
                                    class="form-control"
                                    name="fuel[]"
-                                   min="1"
-                                   value="1">
+                                   min="5"
+                                   max="40"
+                                   value="15">
                         </div>
                     </div>
 
@@ -208,14 +215,14 @@ function addVehicle() {
             <div class="row mb-2">
                 <div class="col-md-5">Annual distance (km)</div>
                 <div class="col-md-7">
-                    <input type="number" class="form-control" name="distance[]" min="0" value="0">
+                    <input type="number" class="form-control" name="distance[]" min="0" max="100000" value="0">
                 </div>
             </div>
 
             <div class="row mb-2">
                 <div class="col-md-5">Fuel economy (km/L)</div>
                 <div class="col-md-7">
-                    <input type="number" class="form-control" name="fuel[]" min="1" value="1">
+                    <input type="number" class="form-control" name="fuel[]" min="5" max="40" value="15">
                 </div>
             </div>
 
