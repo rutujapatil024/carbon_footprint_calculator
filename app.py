@@ -54,13 +54,13 @@ def admin():
 
     return render_template(
         'admin.html',
-        apartment=row[0],
-        detached=row[1],
-        attached=row[2],
-        diet=row[3],
-        rail=row[4],
-        bus=row[5],
-        vehicle=row[6]
+        apartment=float(row[0]),
+        detached=float(row[1]),
+        attached=float(row[2]),
+        diet=float(row[3]),
+        rail=float(row[4]),
+        bus=float(row[5]),
+        vehicle=float(row[6])
     )
 
 
@@ -80,24 +80,24 @@ def update_factors():
     cursor = conn.cursor()
 
     cursor.execute("""
-    UPDATE EMISSION_FACTORS
-    SET apartment_factor = %s,
-        detached_factor = %s,
-        attached_factor = %s,
-        diet_factor = %s,
-        rail_factor = %s,
-        bus_factor = %s,
-        vehicle_factor = %s
-    WHERE id = 1
-""", (
-    apartment,
-    detached,
-    attached,
-    diet,
-    rail,
-    bus,
-    vehicle
-))
+        UPDATE EMISSION_FACTORS
+        SET apartment_factor = %s,
+            detached_factor = %s,
+            attached_factor = %s,
+            diet_factor = %s,
+            rail_factor = %s,
+            bus_factor = %s,
+            vehicle_factor = %s
+        WHERE id = 1
+    """, (
+        apartment,
+        detached,
+        attached,
+        diet,
+        rail,
+        bus,
+        vehicle
+    ))
 
     conn.commit()
     cursor.close()
@@ -133,9 +133,16 @@ def calculate():
     if row is None:
         return "Emission factors not found in database"
 
-    apartment_f, detached_f, attached_f, diet_f, rail_f, bus_f, vehicle_f = row
+    # Convert ALL DB values to float immediately
+    apartment_f = float(row[0])
+    detached_f  = float(row[1])
+    attached_f  = float(row[2])
+    diet_f      = float(row[3])
+    rail_f      = float(row[4])
+    bus_f       = float(row[5])
+    vehicle_f   = float(row[6])
 
-    # ----- MAP USER CHOICES TO DB FACTORS -----
+    # ----- MAP USER CHOICES -----
     HOUSE_TYPE_MAP = {
         "Apartment": apartment_f,
         "Detached": detached_f,
@@ -175,9 +182,9 @@ def calculate():
     bus = float(request.form.get('bus', 0))
 
     transport_emission = calculate_public_transport(
-        rail_above * rail_f,
-        rail_below * rail_f,
-        bus * bus_f
+        float(rail_above) * rail_f,
+        float(rail_below) * rail_f,
+        float(bus) * bus_f
     )
 
     # -------- VEHICLES --------
