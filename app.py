@@ -24,7 +24,7 @@ def household():
 def individual():
     return render_template('individual.html')
 
-# ---------------- ADMIN PAGE ----------------
+#admin page
 @app.route('/admin')
 def admin():
     from db_config import get_connection
