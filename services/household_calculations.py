@@ -27,6 +27,6 @@ def calculate_household(
     if diet == "HeavyMeat":
         diet_emission *= 1.2
 
-    total = (electricity_emission + housing_emission + diet_emission) / max(residents, 1)
+    total = (electricity_emission + housing_emission + diet_emission)
 
     return round(total, 2)

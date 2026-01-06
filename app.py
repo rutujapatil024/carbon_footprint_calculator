@@ -62,8 +62,6 @@ def admin():
         vehicle=float(row[6])
     )
 
-
-# ---------------- UPDATE FACTORS ----------------
 @app.route('/update_factors', methods=['POST'])
 def update_factors():
     from db_config import get_connection
@@ -112,7 +110,7 @@ def calculate():
 
     is_household = 'residents' in request.form
 
-    # -------- HOME / LIVING --------
+    #home/living calculation
     if is_household:
         household_emission = calculate_household(
             request.form['house_type'],
@@ -129,14 +127,14 @@ def calculate():
             request.form['diet']
         )
 
-    # -------- TRANSPORT --------
+    # transport
     transport_emission = calculate_public_transport(
         float(request.form.get('rail_above', 0)) +
         float(request.form.get('rail_below', 0)),
         float(request.form.get('bus', 0))
     )
 
-    # -------- VEHICLES --------
+    # vehicle
     vehicle_emission = 0
     vehicle_details = []
 
@@ -154,8 +152,8 @@ def calculate():
     )
 
     impact_level = (
-        "Low" if total < 3 else
-        "Moderate" if total <= 6 else
+        "Low" if total < 2 else
+        "Moderate" if total <= 4 else
         "High"
     )
 

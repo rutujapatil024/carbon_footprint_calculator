@@ -1,6 +1,5 @@
 from services.common import get_emission_factors
 
-
 def calculate_individual(
     house_type,
     house_size,
